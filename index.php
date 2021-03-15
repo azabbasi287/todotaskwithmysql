@@ -1,6 +1,8 @@
+<?php
+require_once 'dbconfig.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <title>پروژه عملی</title>
@@ -25,6 +27,7 @@
                             <th>نام خانوادگی</th>
                             <th>کاری که باید انجام شود</th>
                             <th>تاریخ ساخت</th>
+                            <th>تکمیل است یا نه</th>
                             <th>ویرایش</th>
                             <th>حذف</th>
                         </thead>
@@ -42,7 +45,9 @@
                                 <td>
                                     2020/02/21
                                 </td>
-
+                                <td>
+                                   1
+                                </td>
                                 <td><a href="#"><button class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
 
                                 <td><a href="#"><button class="btn btn-danger" onClick="return confirm('آیا حذف انجام شود');"><span class="glyphicon glyphicon-trash"></span></button></a></td>
