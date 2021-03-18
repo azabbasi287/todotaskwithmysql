@@ -6,10 +6,11 @@ define("DB_PASS" , '');
 define("DB_NAME" , 'todotask');
 
 try{
-    $connection = new PDO("mysql:host=".DB_HOST.";dbname".DB_NAME,DB_USER,DB_PASS);
+    $connection = new PDO("mysql:host=".DB_HOST. ";dbname=".DB_NAME,DB_USER,DB_PASS);
     $connection -> exec('SET NAMES utf8');
     $connection -> setAttribute(PDO::ERRMODE_EXCEPTION , PDO::ATTR_ERRMODE);
-}catch (Exception $e){
-    echo  $e->getMessage();
+    echo 'connect';
 }
-?>
+catch(PDOException $e){
+    echo $e ->getMessage();
+}

@@ -33,38 +33,37 @@
                         </thead>
                         <tbody>
                         <?php
-                        $sql = "SELECT  names,task,create_at,completed,id FROM usertask";
+                        $sql = "SELECT  names,task,create_at,completed FROM usertask";
                         $query = $connection->prepare($sql);
                         $query ->execute();
                         $result = $query->fetchAll(PDO::FETCH_OBJ);
                         if ($query->rowCount()>0){
-                        foreach ($result as $item) {
-                            $count =0;
+                            $counter =0;
+                        foreach ($result as $result) {
                         ?>
                             <tr>
                                 <td>
-                                    <?= htmlentities($count) ?>
+                                    <?= htmlentities($counter) ?>
                                 </td>
                                 <td>
                                    <?= htmlentities($result->names)?>
                                 </td>
                                 <td>
-                                    <?= htmlentities($result->names)?>
+                                    <?= htmlentities($result->task)?>
                                 </td>
                                 <td>
-                                    <?= htmlentities($result->names)?>
+                                    <?= htmlentities($result->create_at)?>
                                 </td>
                                 <td>
-                                    <?= htmlentities($result->names)?>
+                                    <?= htmlentities($result->completed)?>
                                 </td>
                                 <td><a href="#"><button class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
 
                                 <td><a href="#"><button class="btn btn-danger" onClick="return confirm('آیا حذف انجام شود');"><span class="glyphicon glyphicon-trash"></span></button></a></td>
                             </tr>
                         <?php
-                        $count++;
+                        $counter++;
                         }}
-                        ?>
                         ?>
                         </tbody>
                     </table>
