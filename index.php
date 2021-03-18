@@ -1,5 +1,14 @@
 <?php
-        require_once 'dbconfig.php';
+require_once 'dbconfig.php';
+        if (isset($_REQUEST['del'])){
+            $userid = intval($_GET['del']);
+            $sql = 'delete from usertask where id=:code';
+            $query = $connection->prepare($sql);
+            $query -> bindParam('code', $userid , PDO::PARAM_STR);
+            $query ->execute();
+            echo '<script>window.alert("the delete mission is seccful")</script>';
+            echo '<script>window.location.href="index.php"</script>';
+        }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +42,7 @@
                         </thead>
                         <tbody>
                         <?php
-                        $sql = "SELECT  names,task,create_at,completed FROM usertask";
+                        $sql = "SELECT  names,task,create_at,completed,id FROM usertask";
                         $query = $connection->prepare($sql);
                         $query ->execute();
                         $result = $query->fetchAll(PDO::FETCH_OBJ);
@@ -57,9 +66,9 @@
                                 <td>
                                     <?= htmlentities($result->completed)?>
                                 </td>
-                                <td><a href="#"><button class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
+                                <td><a href="update.php"><button class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
 
-                                <td><a href="#"><button class="btn btn-danger" onClick="return confirm('آیا حذف انجام شود');"><span class="glyphicon glyphicon-trash"></span></button></a></td>
+                                <td><a href="index.php?del=<?=htmlentities($result->id)?>"><button class="btn btn-danger" onClick="return confirm('آیا حذف انجام شود');"><span class="glyphicon glyphicon-trash"></span></button></a></td>
                             </tr>
                         <?php
                         $counter++;
