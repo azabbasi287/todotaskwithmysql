@@ -32,26 +32,40 @@
                             <th>حذف</th>
                         </thead>
                         <tbody>
+                        <?php
+                        $sql = "SELECT  names,task,create_at,completed,id FROM usertask";
+                        $query = $connection->prepare($sql);
+                        $query ->execute();
+                        $result = $query->fetchAll(PDO::FETCH_OBJ);
+                        if ($query->rowCount()>0){
+                        foreach ($result as $item) {
+                            $count =0;
+                        ?>
                             <tr>
                                 <td>
-                                    1
+                                    <?= htmlentities($count) ?>
                                 </td>
                                 <td>
-                                    خسروجردی  حسن
+                                   <?= htmlentities($result->names)?>
                                 </td>
                                 <td>
-                                    کارهای مطب
+                                    <?= htmlentities($result->names)?>
                                 </td>
                                 <td>
-                                    2020/02/21
+                                    <?= htmlentities($result->names)?>
                                 </td>
                                 <td>
-                                   1
+                                    <?= htmlentities($result->names)?>
                                 </td>
                                 <td><a href="#"><button class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
 
                                 <td><a href="#"><button class="btn btn-danger" onClick="return confirm('آیا حذف انجام شود');"><span class="glyphicon glyphicon-trash"></span></button></a></td>
                             </tr>
+                        <?php
+                        $count++;
+                        }}
+                        ?>
+                        ?>
                         </tbody>
                     </table>
                 </div>
