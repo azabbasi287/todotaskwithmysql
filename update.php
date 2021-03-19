@@ -1,3 +1,21 @@
+<?php
+require_once "dbconfig.php";
+    if (isset($_POST['update'])){
+        $userid = intval($_GET['id']);
+        $names = $_POST['names'];
+        $task = $_POST['task'];
+        $completed = $_POST['completed'];
+        $sql = 'UPDATE `usertask` SET names=:names ,task=:task,completed=:completed WHERE  id=:binarycode';
+        $query = $connection->prepare($sql);
+        $query -> bindParam(':names' ,$names , PDO::PARAM_STR);
+        $query -> bindParam(':task' ,$task , PDO::PARAM_STR);
+        $query -> bindParam(':completed' ,$completed , PDO::PARAM_STR);
+        $query-> bindParam(':binarycode', $userId, PDO::PARAM_STR);
+        $query->execute();
+        echo '<script>window.alert("the update is seccfully")</script>';
+        echo '<script>window.location.href="index.php"</script>';
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,20 +40,31 @@
                 <hr />
             </div>
         </div>
-        <form>
+        <?php
+        $user_id = intval($_GET['id']);
+        $sql = "SELECT  names,task,create_at,completed,id FROM usertask where id=:id";
+        $query = $connection->prepare($sql);
+        $query->bindParam("id" , $user_id ,PDO::PARAM_STR );
+        $query ->execute();
+        $result = $query->fetch(PDO::FETCH_OBJ);
+        ?>
+        <form method="post">
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label>نام</label>
-                    <input type="text" class="form-control" placeholder="مثال : علی">
+                    <input value="<?= htmlentities($result->names);?>" name="names" type="text" class="form-control" placeholder="مثال : علی">
+                </div>
+                <div class="form-group col-md-6">
+                    <label>تکمیل شده یا نه؟</label>
+                    <input value="<?= htmlentities($result->completed) ?>" name="completed" type="text" class="form-control" placeholder="0 یا 1">
                 </div>
             </div>
+
             <div class="form-group">
                 <label>کاری که باید انجام شود</label>
-                <input type="email" class="form-control" placeholder="مثال : ali@gmail.com">
+                <input name="task"  value="<?=htmlentities($result->task) ?>" type="text" class="form-control" placeholder="تمیز کردن خانه">
             </div>
-            <button type="submit" class="btn btn-warning">ثبت</button>
-        </form>
-
+            <input type="submit" class="btn btn-warning" name="update" value="ثبت">
         </form>
 
 

@@ -28,7 +28,7 @@ require_once 'dbconfig.php';
     <div class="container border p-4 mt-4">
         <div class="row">
             <div class="col-md-12">
-                <a href="#"><button class="btn btn-primary font-16 m-3">وارد کردن رکورد</button></a>
+                <a href="insert.php"><button class="btn btn-primary font-16 m-3">وارد کردن رکورد</button></a>
                 <div class="table-responsive">
                     <table id="mytable" class="table table-bordered table-striped m-2">
                         <thead>
@@ -49,6 +49,8 @@ require_once 'dbconfig.php';
                         if ($query->rowCount()>0){
                             $counter =0;
                         foreach ($result as $result) {
+                            if ($result->completed){
+
                         ?>
                             <tr>
                                 <td>
@@ -58,7 +60,9 @@ require_once 'dbconfig.php';
                                    <?= htmlentities($result->names)?>
                                 </td>
                                 <td>
+                                    <strike>
                                     <?= htmlentities($result->task)?>
+                                    </strike>
                                 </td>
                                 <td>
                                     <?= htmlentities($result->create_at)?>
@@ -66,12 +70,39 @@ require_once 'dbconfig.php';
                                 <td>
                                     <?= htmlentities($result->completed)?>
                                 </td>
-                                <td><a href="update.php"><button class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
+                                <td><a href="update.php?id=<?= htmlentities($result->id)?>"><button class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
 
                                 <td><a href="index.php?del=<?=htmlentities($result->id)?>"><button class="btn btn-danger" onClick="return confirm('آیا حذف انجام شود');"><span class="glyphicon glyphicon-trash"></span></button></a></td>
                             </tr>
+
                         <?php
-                        $counter++;
+
+                        }else{
+                        ?>
+                        <tr>
+                            <td>
+                                <?= htmlentities($counter) ?>
+                            </td>
+                            <td>
+                                <?= htmlentities($result->names)?>
+                            </td>
+                            <td>
+                                <?= htmlentities($result->task)?>
+                            </td>
+                            <td>
+                                <?= htmlentities($result->create_at)?>
+                            </td>
+                            <td>
+                                <?= htmlentities($result->completed)?>
+                            </td>
+                            <td><a href="update.php?id=<?= htmlentities($result->id)?>"><button class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></button></a></td>
+
+                            <td><a href="index.php?del=<?=htmlentities($result->id)?>"><button class="btn btn-danger" onClick="return confirm('آیا حذف انجام شود');"><span class="glyphicon glyphicon-trash"></span></button></a></td>
+                        </tr>
+                        <?php
+
+                            }
+                            $counter++;
                         }}
                         ?>
                         </tbody>
