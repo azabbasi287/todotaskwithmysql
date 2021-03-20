@@ -5,12 +5,17 @@ require_once "dbconfig.php";
         $names = $_POST['names'];
         $task = $_POST['task'];
         $completed = $_POST['completed'];
-        $sql = 'UPDATE `usertask` SET names=:names ,task=:task,completed=:completed WHERE  id=:binarycode';
+/*        $sql = "UPDATE usertask set names=:names,completed=:completed ,task=:task WHERE  id=:binarycode";*/
+       $sql = "UPDATE `usertask`   
+   SET `names` = :names,
+       `completed` = :completed,
+       `task` = :task
+ WHERE `usertask`.`id` = :user_id";
         $query = $connection->prepare($sql);
         $query -> bindParam(':names' ,$names , PDO::PARAM_STR);
         $query -> bindParam(':task' ,$task , PDO::PARAM_STR);
         $query -> bindParam(':completed' ,$completed , PDO::PARAM_STR);
-        $query-> bindParam(':binarycode', $userId, PDO::PARAM_STR);
+        $query-> bindParam(':user_id', $userId, PDO::PARAM_STR);
         $query->execute();
         echo '<script>window.alert("the update is seccfully")</script>';
         echo '<script>window.location.href="index.php"</script>';
